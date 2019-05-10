@@ -33,19 +33,17 @@ out vec4 fragColor;
 const int AMOUNT = 10;
 
 void main(void) {
-    fragColor += sin(inData.v_texcoord.x * 32);
-    fragColor += sin(inData.v_texcoord.y * 18) + spectrum.x * 20;
+    // fragColor.g *= sin(inData.v_texcoord.x * 6 + spectrum.x * 100) / cos(inData.v_texcoord.x * 15);
+    // fragColor.g += tan(inData.v_texcoord.y * 12 + spectrum.x * 10);
 
+    fragColor.r += sin(inData.v_texcoord.x * 3000 + spectrum.x * 10) / cos(inData.v_texcoord.x * 15);
+    fragColor.r += sin(inData.v_texcoord.x * 30 + spectrum.x * 10) / cos(inData.v_texcoord.x * 60);
 
-    fragColor.r -= sin(inData.v_texcoord.x * 16 - spectrum.x * 5);
-    fragColor.r -= sin(inData.v_texcoord.y * 9 - spectrum.x * 5);
+    fragColor.r += sin(inData.v_texcoord.y * 30 + spectrum.x * 10) / tan(inData.v_texcoord.y * 5);
+    fragColor.r += sin(inData.v_texcoord.y * 30 + spectrum.x * 10) / cos(inData.v_texcoord.y * 30);
+    fragColor += vec4(int(sin(inData.v_texcoord.x * 30) < spectrum.x * 10));
 
-    fragColor.r += cos(inData.v_texcoord.x * 16 - spectrum.x * 5);
-    fragColor.r -= cos(inData.v_texcoord.y * 9 - spectrum.x * 5);
-    
-    fragColor.g += 1 * sin(inData.v_texcoord.x * 16 * 2 - spectrum.x * 5);
-    fragColor.g += 1 * tan(inData.v_texcoord.y * 9 * 2 - spectrum.x * 5);
-    
-    fragColor *= 10;
-    
+    fragColor *= spectrum.x * (1 - int(spectrum.x > .2));
+    if(spectrum.x > .2) fragColor *= spectrum.x;
+    // fragColor += .5 * texture(code, rotate180(inData.v_texcoord * (1 - spectrum.x) - spectrum.x * 1));
 }
